@@ -18,17 +18,21 @@ function GameDetail() {
             .then(json => setDetail(json))
             .catch(error => console.log(error))
             .finally(() => setLoading(false));
-    }, []);
+    }, [url]);
 
     if(loading) {
         return <Spinner animation="border" className="spinner" />
     }
 
+    let createMarkup = HTML => {
+        return { __html: HTML };
+    };
+
     return (
         <div className="details">
             <Image src={detail.background_image} />
             <h2>{detail.name}</h2>
-            <p>{detail.description}</p>
+            <p dangerouslySetInnerHTML={createMarkup(detail.description)} />
             <a href={detail.website}>Visit website</a>
         </div>
     );
